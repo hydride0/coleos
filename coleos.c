@@ -28,13 +28,13 @@ int main(int argc, char **argv) {
 
         for (int i = 0; i < PATH_LEN; i++) {
             sprintf(abs_path, "%s/%s", path[i], command); // building path
-            if (access(abs_path, X_OK) == 0) // if file exits and is executable
+            if (access(abs_path, X_OK) == 0) // if file exists and is executable
                 break;
         }
 
         if(fork() == 0) { // executed by child process only
             if (execl(abs_path, command, NULL) == -1)
-                perror(command); // print error message if exec fails
+                perror(command); // prints error message if exec fails
             exit(0); // child exits
         }
         else
