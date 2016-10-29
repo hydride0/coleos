@@ -1,2 +1,2 @@
-# coleos
+# koleos
 A simple shell 
