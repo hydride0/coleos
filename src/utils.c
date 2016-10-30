@@ -19,16 +19,17 @@ char **parse_command(char *cmd, int *arg_no) {
     while ( token != NULL ) {
         args[k] = malloc(strlen(token)+1);
         strcpy(args[k], token);
+        args[k][strlen(token)+1] = '\0';
         k++;
         token = strtok(NULL, " ");
     }
-    args[k+1] = NULL;
+    args[token_no] = (char *) 0;
     *arg_no = k;
     return args;
 }
         
 
-void *build_prompt(char *prompt_buffer) {
+void build_prompt(char *prompt_buffer) {
     char *user = getpwuid(getuid())->pw_name;
     char *current_dir = getcwd(NULL, 0);
     char hostname[10];

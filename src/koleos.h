@@ -8,4 +8,5 @@
 #define PATH_LEN 2
 
 char **parse_command(char *cmd, int *arg_no);
-void *build_prompt(char *prompt_buffer);
+void build_prompt(char *prompt_buffer);
+void cd(const char *path);

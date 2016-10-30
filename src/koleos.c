@@ -15,22 +15,25 @@ int main(int argc, char **argv) {
         
         if (!(strcmp(command, "exit") ) ) //  ...or until "exit" is inserted
             break; 
+        
+        else if (!(strcmp(arg[0], "cd") ) )
+            cd(arg[1]);
 
-        add_history(command); // command is added in history so you can access it afterwards with arrows
+        else {
+            for (int i = 0; i < PATH_LEN; i++) {
+                sprintf(abs_path, "%s/%s", path[i], arg[0]); // building path
+                if (access(abs_path, X_OK) == 0) // if file exists and is executable
+                    break;
+            }
 
-        for (int i = 0; i < PATH_LEN; i++) {
-            sprintf(abs_path, "%s/%s", path[i], arg[0]); // building path
-            if (access(abs_path, X_OK) == 0) // if file exists and is executable
-                break;
+            if(fork() == 0) { // executed by child process only
+                if (execv(abs_path, arg) == -1)
+                    perror(command); // prints error message if exec fails
+                exit(0); // child exits
+            }
+            else
+                wait(0); // parent process waits for the child to terminate
         }
-
-        if(fork() == 0) { // executed by child process only
-            if (execv(abs_path, arg) == -1)
-                perror(command); // prints error message if exec fails
-            exit(0); // child exits
-        }
-        else
-            wait(0); // parent process waits for the child to terminate
     }
     free(command);
     free(arg);
