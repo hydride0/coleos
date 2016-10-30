@@ -1,2 +1,2 @@
 build: src/koleos.c
-	@$$CC -lreadline -o koleos src/koleos.c src/utils.c src/cd.c
+	@$$CC -lreadline -o koleos src/{koleos,utils,cd}.c

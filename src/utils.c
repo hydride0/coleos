@@ -34,5 +34,5 @@ void build_prompt(char *prompt_buffer) {
     char *current_dir = getcwd(NULL, 0);
     char hostname[10];
     gethostname(hostname, 10);
-    sprintf(prompt_buffer, "┌[%s]\n└[%s@%s]>> ", current_dir, user, hostname);
+    sprintf(prompt_buffer, "\033[38;5;131m┌[%s]\033[m\n\033[38;5;131m└[%s@%s]>>\033[m ", current_dir, user, hostname);
 }

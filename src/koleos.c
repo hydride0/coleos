@@ -7,16 +7,20 @@ int main(int argc, char **argv) {
     char **arg;
 
     for (;;) { // loops until the end of time...
-        char prompt[20];
+        char prompt[30];
         build_prompt(prompt);
         command = readline(prompt);
+        add_history(command);
         int arg_no;
         arg = parse_command(command, &arg_no);
         
         if (!(strcmp(command, "exit") ) ) //  ...or until "exit" is inserted
             break; 
         
-        else if (!(strcmp(arg[0], "cd") ) )
+        if (dir_exists(arg[0]))
+            cd(arg[0]);
+            
+        else if (!strcmp(arg[0], "cd") )
             cd(arg[1]);
 
         else {
@@ -34,6 +38,7 @@ int main(int argc, char **argv) {
             else
                 wait(0); // parent process waits for the child to terminate
         }
+
     }
     free(command);
     free(arg);
