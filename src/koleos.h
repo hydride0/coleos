@@ -7,7 +7,7 @@
 #include <ctype.h>
 #include <pwd.h>
 #include <dirent.h>
-#include "nargv/nargv.h"
+#include "nargv.h"
 #define PATH_LEN 2
 
 void build_prompt(char *prompt_buffer);
