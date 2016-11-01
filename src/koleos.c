@@ -2,12 +2,12 @@
 
 int main(int argc, char **argv) {
     char *path[PATH_LEN] = { "/usr/bin", "/usr/local/bin" };
-    char abs_path[20];
+    char abs_path[50];
     char *command;
     NARGV *arg;
 
     for (;;) { // loops until the end of time...
-        char prompt[30];
+        char prompt[70];
         build_prompt(prompt);
         command = readline(prompt);
         int arg_no;
@@ -17,13 +17,16 @@ int main(int argc, char **argv) {
             arg = nargv_parse(command);
 
             if (!(strcmp(command, "exit") ) ) //  ...or until "exit" is inserted
-                break; 
+                break;
  
             if (dir_exists(arg->argv[0]))
                 cd(arg->argv[0]);
             
-            else if (!strcmp(arg->argv[0], "cd") )
-                cd(arg->argv[1]);
+            else if (!strcmp(arg->argv[0], "cd") ) {
+                if (dir_exists(arg->argv[1]))
+                    cd(arg->argv[1]);
+                else perror("cd");
+            }
             
             else {
                 for (int i = 0; i < PATH_LEN; i++) {
